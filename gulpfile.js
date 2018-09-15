@@ -93,26 +93,6 @@ gulp.task('watch', ['deploy'], function () {
     }));
 });
 
-gulp.task('watch-old', function () {
-    browserSync.init({
-        notify: false,
-        proxy: settings.urlToPreview,
-        ghostMode: false,
-        localOnly: true,
-        open: false,
-        online: false,
-        xip: false,
-        tunnel: null
-    });
-
-    gulp.watch(settings.pluginsSourceCode + '**/*.php', ['waitForPlugins']);
-
-    gulp.watch(settings.themeSourceCode + '**/*.php', ['waitForPhp']);
-    gulp.watch(settings.themeSourceCode + 'css/**/*.css', ['waitForStyles']);
-    gulp.watch([settings.themeSourceCode + 'js/modules/*.js',
-        settings.themeSourceCode + 'js/scripts.js'], ['waitForScripts']);
-});
-
 gulp.task('waitForPlugins', ['plugins'], function () {
     browserSync.reload();
 });
