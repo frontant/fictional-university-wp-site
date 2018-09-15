@@ -1,4 +1,3 @@
-// dummy comment
 var gulp = require('gulp'),
         settings = require('./settings'),
         webpack = require('webpack'),
