@@ -1,4 +1,4 @@
-var devEnvDir = '/home/anton/Netbeans_WebsiteProjects/WpFictionalUniversityTheme/src/';
+var devEnvDir = '/home/anton/Schreibtisch/WpFictionalUniversityTheme/src/';
 var wpContentDir = '/var/www/html/wp/wp-content/';
 
 
