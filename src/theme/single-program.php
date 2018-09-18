@@ -23,7 +23,7 @@ while (have_posts()) {
         <?php
         // Professors
 
-        $relatedPrograms = new WP_Query(array(
+        $relatedProfessors = new WP_Query(array(
             'posts_per_page' => -1,
             'post_type' => 'professor',
             'orderby' => 'title',
@@ -37,7 +37,7 @@ while (have_posts()) {
             )
         ));
 
-        if ($relatedPrograms->have_posts()) {
+        if ($relatedProfessors->have_posts()) {
             ?>
             <hr class="section-break">
 
@@ -45,8 +45,8 @@ while (have_posts()) {
 
             <ul class="professor-cards">
                 <?php
-                while ($relatedPrograms->have_posts()) {
-                    $relatedPrograms->the_post();
+                while ($relatedProfessors->have_posts()) {
+                    $relatedProfessors->the_post();
                     ?>
                     <li class="professor-card__list-item">
                         <a class="professor-card" href="<?php the_permalink(); ?>">
