@@ -35,6 +35,8 @@ class Search {
         }, 300);
 
         this.isOverlayOpen = true;
+
+        return false;
     }
 
     closeOverlay() {

@@ -24,8 +24,8 @@ pageBanner(array(
             </div>
         </div>
         <?php
-        echo paginate_links();
     }
+    echo paginate_links();
     ?>
 </div>
 
