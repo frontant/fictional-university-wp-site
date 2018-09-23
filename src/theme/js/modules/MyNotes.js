@@ -8,9 +8,10 @@ class MyNotes{
     // event handler -----------------------
 
     events(){
-        $(".delete-note").on("click", this.deleteNote);
-        $(".edit-note").on("click", this.editNote.bind(this));
-        $(".update-note").on("click", this.updateNote.bind(this));
+        $("#my-notes").on("click", ".delete-note", this.deleteNote);
+        $("#my-notes").on("click", ".edit-note", this.editNote.bind(this));
+        $("#my-notes").on("click", ".update-note", this.updateNote.bind(this));
+        $(".submit-note").on("click", this.createNote.bind(this))
     }
 
     // methods -----------------------------
@@ -127,6 +128,45 @@ class MyNotes{
 
             this.clearNoteDataCache(note);
             this.makeNoteReadonly(note);
+        })
+        .fail((response) => {
+            console.log("FAILED");
+            console.log(response);
+        });
+    }
+
+    createNote(e){
+        var newNote = {
+            "title" : $(".new-note-title").val(),
+            "content" : $(".new-note-body").val(),
+            "status" : "publish"
+        };
+
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
+            },
+            "url": universityData.root_url + "/wp-json/wp/v2/note/",
+            "method" : "POST",
+            "data" : newNote
+        })
+        .done((response) => {
+            console.log("SUCCESS");
+            console.log(response);
+
+            $(".new-note-title, .new-note-body").val('');
+            $(`
+                <li data-id="${response.id}">
+                    <input class="note-title-field" readonly value="${response.title.raw}">
+                    <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span>
+                    <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</span>
+                    <textarea class="note-body-field" readonly>${response.content.raw}</textarea>
+                    <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true"></i> Save</span>
+                </li>
+            `)
+            .prependTo("#my-notes")
+            .hide()
+            .slideDown();
         })
         .fail((response) => {
             console.log("FAILED");
