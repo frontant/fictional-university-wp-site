@@ -7,6 +7,7 @@
 
         <p style="color: #006; background-color: grey;">
             TODO:<br>
+            + on clicking the save button disable cancel and delete buttons (MyNotes) <br>
             + set up the error page<br>
             + enable wordpress to print errors to php files<br>
             + disable REST API for "/users" requests

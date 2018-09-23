@@ -43,3 +43,8 @@ p, ul, ol {
 p, li {
   line-height: 1.65;
 }
+
+textarea[readonly],
+input[readonly]{
+  caret-color: transparent;
+}
