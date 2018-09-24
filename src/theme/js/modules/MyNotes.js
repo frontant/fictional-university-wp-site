@@ -24,18 +24,19 @@ class MyNotes{
     }
 
     restoreNoteDataCache(inNote){
-        var noteDataCache = inNote.data("cache");
-        
         if(typeof noteDataCache != "undefined"){
-            inNote.find(".note-title-field").val(noteDataCache.title);
-            inNote.find(".note-body-field").val(noteDataCache.content);
-
+            this.setNoteData(inNote, inNote.data("cache"));
             this.clearNoteDataCache(inNote);
         }
     }
 
     clearNoteDataCache(inNote){
         inNote.removeData("cache");
+    }
+
+    setNoteData(inNote, inData){
+        inNote.find(".note-title-field").val(inData.title);
+        inNote.find(".note-body-field").val(inData.content);
     }
 
     deleteNote(e){
@@ -53,6 +54,10 @@ class MyNotes{
             console.log(response);
 
             $(note).slideUp();
+
+            if(response.countUserNotes < 5 && $(".note-limit-message").hasClass("active")){
+                $(".note-limit-message").removeClass("active");
+            }
         })
         .fail((response) => {
             console.log("FAILED");
@@ -128,6 +133,10 @@ class MyNotes{
 
             this.clearNoteDataCache(note);
             this.makeNoteReadonly(note);
+            this.setNoteData(note, {
+                title: response.title.raw,
+                content: response.content.raw
+            });
         })
         .fail((response) => {
             console.log("FAILED");
@@ -171,6 +180,10 @@ class MyNotes{
         .fail((response) => {
             console.log("FAILED");
             console.log(response);
+
+            if(response.responseText == "You have reached your note limit."){
+                $(".note-limit-message").addClass("active");
+            }
         });
     }
 }
